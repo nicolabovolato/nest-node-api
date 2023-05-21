@@ -21,7 +21,6 @@ import dbConfig, { Config as DbConfig } from './db/db.config';
           level: config.getOrThrow('level'),
           name: config.getOrThrow('version'),
         },
-        useExisting: true,
       }),
     }),
     PrismaModule.forRootAsync({
