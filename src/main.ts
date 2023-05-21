@@ -1,14 +1,31 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
-import { Config } from './app.config';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
+
 import { Logger } from 'nestjs-pino';
 
+import { AppModule } from './app.module';
+import { Config } from './app.config';
+
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    new FastifyAdapter(),
+    {
+      bufferLogs: true,
+    },
+  );
   app.useLogger(app.get(Logger));
 
   const config = app.get<ConfigService<Config>>(ConfigService);
-  await app.listen(config.getOrThrow('port'));
+  const port = config.getOrThrow('port');
+
+  await app.listen(config.getOrThrow('port'), '::');
+
+  const logger = app.get<Logger>(Logger);
+  logger.log(`Listening on http://[::]:${port}`);
 }
 bootstrap();

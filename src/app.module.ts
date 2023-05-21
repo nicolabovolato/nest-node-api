@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { LoggerModule } from 'nestjs-pino';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-
 import config, { Config } from './app.config';
-import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   imports: [
@@ -18,6 +18,7 @@ import { LoggerModule } from 'nestjs-pino';
             level: config.getOrThrow('logLevel'),
             name: config.getOrThrow('version'),
           },
+          useExisting: true,
         };
       },
     }),
