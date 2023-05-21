@@ -7,6 +7,7 @@ import {
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { Logger } from 'nestjs-pino';
+import { patchNestJsSwagger } from 'nestjs-zod';
 
 import { AppModule } from './app.module';
 import { Config } from './app.config';
@@ -27,6 +28,7 @@ async function bootstrap() {
   const openapi = config.getOrThrow('openapi', { infer: true });
 
   if (openapi) {
+    patchNestJsSwagger();
     SwaggerModule.setup(
       'documentation',
       app,
