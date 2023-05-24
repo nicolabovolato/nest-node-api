@@ -6,9 +6,9 @@ import {
 } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-import { Logger } from 'nestjs-pino';
 import { patchNestJsSwagger } from 'nestjs-zod';
 
+import { LoggerService } from './logger/logger.service';
 import { AppModule } from './app.module';
 import { Config } from './app.config';
 
@@ -20,10 +20,10 @@ async function bootstrap() {
       bufferLogs: true,
     },
   );
-  app.useLogger(app.get(Logger));
+  app.useLogger(app.get(LoggerService));
 
   const config = app.get<ConfigService<Config>>(ConfigService);
-  const logger = app.get<Logger>(Logger);
+  const logger = app.get<LoggerService>(LoggerService);
 
   const openapi = config.getOrThrow('openapi', { infer: true });
 

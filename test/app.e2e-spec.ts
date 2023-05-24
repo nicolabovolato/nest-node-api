@@ -1,11 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
+
 import { INestApplication } from '@nestjs/common';
 import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import * as request from 'supertest';
+
 import { AppModule } from './../src/app.module';
+import { PinoLogger } from 'nestjs-pino';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -20,6 +23,8 @@ describe('AppController (e2e)', () => {
     );
     await app.init();
     await app.getHttpAdapter().getInstance().ready();
+
+    PinoLogger.root.level = 'silent';
   });
 
   it('GET /health', () => {

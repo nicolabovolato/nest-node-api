@@ -40,6 +40,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@golevelup/ts-jest": "^0.3.7",
     "@nestjs/cli": "^9.5.0",
     "@nestjs/schematics": "^9.2.0",
     "@nestjs/testing": "^9.4.1",
@@ -69,6 +70,9 @@
       "json",
       "ts"
     ],
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/$1"
+    },
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
