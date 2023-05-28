@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { APP_INTERCEPTOR, APP_PIPE, RouterModule } from '@nestjs/core';
+import { APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 
 import { ConfigModule } from '@nestjs/config';
 
@@ -18,15 +18,6 @@ import { SettingModule } from './settings/setting.module';
     LoggerModule,
     TodoModule,
     SettingModule,
-    RouterModule.register([
-      {
-        path: 'v1',
-        children: [
-          { path: 'todos', module: TodoModule },
-          { path: 'settings', module: SettingModule },
-        ],
-      },
-    ]),
   ],
   providers: [
     {

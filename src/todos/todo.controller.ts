@@ -32,7 +32,10 @@ import {
 } from './todo.dto';
 
 @ApiTags('todos')
-@Controller()
+@Controller({
+  path: 'todos',
+  version: '1',
+})
 export class TodoController {
   constructor(private readonly service: TodoService) {}
 

@@ -12,7 +12,10 @@ import {
 } from './setting.dto';
 
 @ApiTags('settings')
-@Controller()
+@Controller({
+  path: 'settings',
+  version: '1',
+})
 export class SettingController {
   constructor(private readonly service: SettingService) {}
 

@@ -1,3 +1,4 @@
+import { VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import {
   FastifyAdapter,
@@ -20,6 +21,10 @@ async function bootstrap() {
     },
   );
   app.useLogger(app.get(LoggerService));
+  app.enableShutdownHooks();
+  app.enableVersioning({
+    type: VersioningType.URI,
+  });
 
   const config = app.get<Config>(appconfig.KEY);
   const logger = app.get<LoggerService>(LoggerService);
