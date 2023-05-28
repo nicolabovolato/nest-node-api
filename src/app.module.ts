@@ -20,7 +20,7 @@ import { SettingModule } from './settings/setting.module';
     SettingModule,
     RouterModule.register([
       {
-        path: 'api/v1',
+        path: 'v1',
         children: [
           { path: 'todos', module: TodoModule },
           { path: 'settings', module: SettingModule },

@@ -25,7 +25,6 @@ describe('SettingController (e2e)', () => {
       new FastifyAdapter(),
     );
 
-    // cache = await app.get(CacheService, { strict: false });
     cache = await app.get(CacheService);
 
     await app.init();
@@ -42,14 +41,14 @@ describe('SettingController (e2e)', () => {
     await app.close();
   });
 
-  describe('GET /api/v1/settings/:id', () => {
+  describe('GET /v1/settings/:id', () => {
     beforeEach(async () => {
       await cache.set('settings:setting-key', 'value');
     });
 
     it('should return a setting', async () => {
       await request(app.getHttpServer())
-        .get('/api/v1/settings/setting-key')
+        .get('/v1/settings/setting-key')
         .expect(200)
         .expect({
           value: 'value',
@@ -58,7 +57,7 @@ describe('SettingController (e2e)', () => {
 
     it('should return null on not found', async () => {
       await request(app.getHttpServer())
-        .get('/api/v1/settings/another-setting-key')
+        .get('/v1/settings/another-setting-key')
         .expect(200)
         .expect({
           value: null,
@@ -66,18 +65,18 @@ describe('SettingController (e2e)', () => {
     });
 
     it('should error on invalid id', async () => {
-      await request(app.getHttpServer()).get('/api/v1/settings/id').expect(400);
+      await request(app.getHttpServer()).get('/v1/settings/id').expect(400);
     });
   });
 
-  describe('PUT /api/v1/settings/:id', () => {
+  describe('PUT /v1/settings/:id', () => {
     beforeEach(async () => {
       await cache.set('settings:setting-key', 'value');
     });
 
     it('should return updated setting', async () => {
       await request(app.getHttpServer())
-        .put('/api/v1/settings/setting-key')
+        .put('/v1/settings/setting-key')
         .send({ value: 'new-value' })
         .expect(200)
         .expect({
@@ -87,7 +86,7 @@ describe('SettingController (e2e)', () => {
 
     it('should return deleted setting', async () => {
       await request(app.getHttpServer())
-        .put('/api/v1/settings/setting-key')
+        .put('/v1/settings/setting-key')
         .send({ value: null })
         .expect(200)
         .expect({
@@ -97,7 +96,7 @@ describe('SettingController (e2e)', () => {
 
     it('should error on invalid id', async () => {
       await request(app.getHttpServer())
-        .put('/api/v1/settings/id')
+        .put('/v1/settings/id')
         .send({ value: 'value' })
         .expect(400);
     });
