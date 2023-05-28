@@ -1,5 +1,4 @@
 import { NestFactory } from '@nestjs/core';
-import { ConfigService } from '@nestjs/config';
 import {
   FastifyAdapter,
   NestFastifyApplication,
@@ -10,7 +9,7 @@ import { patchNestJsSwagger } from 'nestjs-zod';
 
 import { LoggerService } from './logger/logger.service';
 import { AppModule } from './app.module';
-import { Config } from './app.config';
+import appconfig, { Config } from './app.config';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -22,12 +21,10 @@ async function bootstrap() {
   );
   app.useLogger(app.get(LoggerService));
 
-  const config = app.get<ConfigService<Config>>(ConfigService);
+  const config = app.get<Config>(appconfig.KEY);
   const logger = app.get<LoggerService>(LoggerService);
 
-  const openapi = config.getOrThrow('openapi', { infer: true });
-
-  if (openapi) {
+  if (config.openapi) {
     patchNestJsSwagger();
     SwaggerModule.setup(
       'documentation',
@@ -39,13 +36,11 @@ async function bootstrap() {
     );
   }
 
-  const port = config.getOrThrow('port', { infer: true });
+  await app.listen(config.port, '::');
 
-  await app.listen(port, '::');
-
-  logger.log(`Listening on http://[::]:${port}`);
-  if (openapi) {
-    logger.log(`SwaggerUI hosted at http://[::]:${port}/documentation`);
+  logger.log(`Listening on http://[::]:${config.port}`);
+  if (config.openapi) {
+    logger.log(`SwaggerUI hosted at http://[::]:${config.port}/documentation`);
   }
 }
 bootstrap();

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 
 import {
   LoggerErrorInterceptor,
@@ -8,18 +8,18 @@ import {
 } from 'nestjs-pino';
 
 import { LoggerService } from './logger.service';
-import config from './logger.config';
+import config, { Config } from './logger.config';
 
 @Module({
   imports: [
     PinoLoggerModule.forRootAsync({
       imports: [ConfigModule.forFeature(config)],
-      inject: [ConfigService],
-      useFactory: async (config: ConfigService) => {
-        const version = config.getOrThrow('version');
+      inject: [config.KEY],
+      useFactory: async (config: Config) => {
+        const version = config.version;
         return {
           pinoHttp: {
-            level: config.getOrThrow('level'),
+            level: config.level,
             mixin: () => ({
               version,
             }),

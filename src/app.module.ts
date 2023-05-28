@@ -10,14 +10,22 @@ import appConfig from './app.config';
 
 import { LoggerModule } from './logger/logger.module';
 import { TodoModule } from './todos/todo.module';
+import { SettingModule } from './settings/setting.module';
 
 @Module({
   imports: [
     ConfigModule.forFeature(appConfig),
     LoggerModule,
     TodoModule,
+    SettingModule,
     RouterModule.register([
-      { path: 'api/v1', children: [{ path: 'todos', module: TodoModule }] },
+      {
+        path: 'api/v1',
+        children: [
+          { path: 'todos', module: TodoModule },
+          { path: 'settings', module: SettingModule },
+        ],
+      },
     ]),
   ],
   providers: [

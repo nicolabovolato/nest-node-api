@@ -9,7 +9,7 @@ import {
 import * as request from 'supertest';
 import { PinoLogger } from 'nestjs-pino';
 
-import { AppModule } from './../src/app.module';
+import { AppModule } from 'src/app.module';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -26,6 +26,10 @@ describe('AppController (e2e)', () => {
     await app.getHttpAdapter().getInstance().ready();
 
     PinoLogger.root.level = 'silent';
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 
   it('GET /health', async () => {
