@@ -1,4 +1,4 @@
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, VersioningType } from '@nestjs/common';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
 import { NestFactory } from '@nestjs/core';
 
@@ -17,6 +17,10 @@ describe('TodoController (e2e)', () => {
     // https://github.com/nestjs/nest/issues/8076
     app = await NestFactory.create(AppModule, new FastifyAdapter(), {
       logger: false,
+    });
+    // Isn't this just ugly?
+    app.enableVersioning({
+      type: VersioningType.URI,
     });
 
     db = await app.get(DatabaseService);
