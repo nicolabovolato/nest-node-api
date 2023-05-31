@@ -5,11 +5,7 @@ import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.inte
 import { ZodSerializerDto } from 'nestjs-zod';
 
 import { SettingService } from './setting.service';
-import {
-  ParamsDto,
-  SettingDto as SettingDto,
-  paramsSchema,
-} from './setting.dto';
+import { ParamsDto, SettingDto, paramsSchema } from './setting.dto';
 
 @ApiTags('settings')
 @Controller({

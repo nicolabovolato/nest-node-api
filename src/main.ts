@@ -36,7 +36,10 @@ async function bootstrap() {
       app,
       SwaggerModule.createDocument(
         app,
-        new DocumentBuilder().setTitle('NestJS Service').build(),
+        new DocumentBuilder()
+          .setTitle('NestJS Service')
+          .addBearerAuth()
+          .build(),
       ),
     );
   }

@@ -40,6 +40,9 @@ dependencies:
   nestjs-zod:
     specifier: ^2.3.2
     version: 2.3.2(@nestjs/common@9.4.1)(@nestjs/core@9.4.1)(@nestjs/swagger@6.3.0)(zod@3.21.4)
+  paseto:
+    specifier: ^3.1.4
+    version: 3.1.4
   pino-http:
     specifier: ^8.3.3
     version: 8.3.3
@@ -4266,6 +4269,11 @@ packages:
       json-parse-even-better-errors: 2.3.1
       lines-and-columns: 1.2.4
     dev: true
+
+  /paseto@3.1.4:
+    resolution: {integrity: sha512-BifaKKu+MS9b/vTgFMC6Q8uLUMqw8VtYgl4qODJWb6Jqt+dTKn8XH9EftJZx+6wxF4ELBbKdH33DZa4inMYVcg==}
+    engines: {node: '>=16.0.0'}
+    dev: false
 
   /path-exists@4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}
