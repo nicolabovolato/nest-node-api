@@ -5,7 +5,7 @@ import { SettingService } from './setting.service';
 import { SettingRepository } from './setting.repository';
 import { Setting } from './setting.entity';
 
-describe('SettingRepository', () => {
+describe('SettingService', () => {
   let settingService: SettingService;
   let settingRepository: DeepMocked<SettingRepository>;
 

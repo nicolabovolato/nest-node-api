@@ -5,7 +5,7 @@ import { TodoService } from './todo.service';
 import { TodoRepository } from './todo.repository';
 import { Todo } from './todo.entity';
 
-describe('TodoRepository', () => {
+describe('TodoService', () => {
   let todoService: TodoService;
   let todoRepository: DeepMocked<TodoRepository>;
 

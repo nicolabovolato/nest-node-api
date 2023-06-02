@@ -13,10 +13,10 @@ export class SelfGuard implements CanActivate {
       context.getHandler(),
     );
     const request = context.switchToHttp().getRequest();
-    const claims: Claims = request.claims;
+    const claims: Claims | undefined = request.claims;
     const sub: string | undefined = request.params?.[subParam];
 
-    if (!sub || sub != claims.sub) return false;
+    if (!claims || !sub || sub != claims.sub) return false;
 
     return true;
   }
