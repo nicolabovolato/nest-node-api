@@ -11,6 +11,7 @@ import { LoggerModule } from './logger/logger.module';
 import { TodoModule } from './todos/todo.module';
 import { SettingModule } from './settings/setting.module';
 import { AuthModule } from './auth/auth.module';
+import { JobModule } from './jobs/job.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { AuthModule } from './auth/auth.module';
     TodoModule,
     SettingModule,
     AuthModule,
+    JobModule,
   ],
   providers: [
     {
