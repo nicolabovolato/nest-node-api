@@ -7,10 +7,10 @@ import {
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { patchNestJsSwagger } from 'nestjs-zod';
+import { Logger } from 'nestjs-pino';
 
-import { LoggerService } from './logger/logger.service';
 import { AppModule } from './app.module';
-import appconfig, { Config } from './app.config';
+import config, { Config } from './app.config';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -20,16 +20,16 @@ async function bootstrap() {
       bufferLogs: true,
     },
   );
-  app.useLogger(app.get(LoggerService));
+  app.useLogger(app.get(Logger));
   app.enableShutdownHooks();
   app.enableVersioning({
     type: VersioningType.URI,
   });
 
-  const config = app.get<Config>(appconfig.KEY);
-  const logger = app.get<LoggerService>(LoggerService);
+  const { openapi, port } = app.get<Config>(config.KEY);
+  const logger = app.get<Logger>(Logger);
 
-  if (config.openapi) {
+  if (openapi) {
     patchNestJsSwagger();
     SwaggerModule.setup(
       'documentation',
@@ -44,11 +44,11 @@ async function bootstrap() {
     );
   }
 
-  await app.listen(config.port, '::');
+  await app.listen(port, '::');
 
-  logger.log(`Listening on http://[::]:${config.port}`);
-  if (config.openapi) {
-    logger.log(`SwaggerUI hosted at http://[::]:${config.port}/documentation`);
+  logger.log(`Listening on http://[::]:${port}`);
+  if (openapi) {
+    logger.log(`SwaggerUI hosted at http://[::]:${port}/documentation`);
   }
 }
 bootstrap();

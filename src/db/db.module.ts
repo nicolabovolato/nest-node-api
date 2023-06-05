@@ -2,15 +2,27 @@ import { Module } from '@nestjs/common';
 import { APP_FILTER, HttpAdapterHost } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 
-import { PrismaClientExceptionFilter } from 'nestjs-prisma';
+import { PrismaClientExceptionFilter, PrismaModule } from 'nestjs-prisma';
 
-import { DatabaseService } from './db.service';
-import config from './db.config';
+import config, { Config } from './db.config';
 
 @Module({
-  imports: [ConfigModule.forFeature(config)],
+  imports: [
+    PrismaModule.forRootAsync({
+      imports: [ConfigModule.forFeature(config)],
+      inject: [config.KEY],
+      useFactory: (config: Config) => ({
+        prismaOptions: {
+          datasources: {
+            db: {
+              url: config.connectionString,
+            },
+          },
+        },
+      }),
+    }),
+  ],
   providers: [
-    DatabaseService,
     {
       provide: APP_FILTER,
       useFactory: ({ httpAdapter }: HttpAdapterHost) => {
@@ -19,6 +31,6 @@ import config from './db.config';
       inject: [HttpAdapterHost],
     },
   ],
-  exports: [DatabaseService],
+  exports: [PrismaModule],
 })
 export class DatabaseModule {}

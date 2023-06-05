@@ -7,7 +7,6 @@ import {
   LoggerModule as PinoLoggerModule,
 } from 'nestjs-pino';
 
-import { LoggerService } from './logger.service';
 import config, { Config } from './logger.config';
 
 @Module({
@@ -24,17 +23,17 @@ import config, { Config } from './logger.config';
               version,
             }),
           },
+          renameContext: 'module',
         };
       },
     }),
   ],
   providers: [
-    LoggerService,
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggerErrorInterceptor,
     },
   ],
-  exports: [LoggerService],
+  exports: [PinoLoggerModule],
 })
 export class LoggerModule {}

@@ -1,21 +1,21 @@
 import { Test } from '@nestjs/testing';
 import { DeepMocked, createMock } from '@golevelup/ts-jest';
 
-import { DatabaseService } from 'src/db/db.service';
+import { PrismaService } from 'nestjs-prisma';
 
 import { TodoRepository } from './todo.repository';
 import { Todo } from './todo.entity';
 
 describe('TodoRepository', () => {
   let todoRepository: TodoRepository;
-  let databaseService: DeepMocked<DatabaseService>;
+  let databaseService: DeepMocked<PrismaService>;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       providers: [
         {
-          provide: DatabaseService,
-          useValue: createMock<DatabaseService>({
+          provide: PrismaService,
+          useValue: createMock<PrismaService>({
             // createMock really works wonders! >:(
             todo: {
               findMany: jest.fn(),
@@ -31,7 +31,7 @@ describe('TodoRepository', () => {
     }).compile();
 
     todoRepository = moduleRef.get(TodoRepository);
-    databaseService = moduleRef.get(DatabaseService);
+    databaseService = moduleRef.get(PrismaService);
   });
 
   describe('getAll', () => {

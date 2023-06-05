@@ -4,13 +4,13 @@ import { NestFactory } from '@nestjs/core';
 
 import * as request from 'supertest';
 import { PinoLogger } from 'nestjs-pino';
+import { PrismaService } from 'nestjs-prisma';
 
 import { AppModule } from 'src/app.module';
-import { DatabaseService } from 'src/db/db.service';
 
 describe('TodoController (e2e)', () => {
   let app: INestApplication;
-  let db: DatabaseService;
+  let db: PrismaService;
 
   beforeAll(async () => {
     // I need to create the real app because HttpAdapterHost (required by nestjs-prisma's exception filter) is not resolved in test modules :(
@@ -23,7 +23,7 @@ describe('TodoController (e2e)', () => {
       type: VersioningType.URI,
     });
 
-    db = await app.get(DatabaseService);
+    db = await app.get(PrismaService);
 
     await app.init();
     await app.getHttpAdapter().getInstance().ready();

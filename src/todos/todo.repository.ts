@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 
-import { DatabaseService } from 'src/db/db.service';
+import { PrismaService } from 'nestjs-prisma';
 
 import { Todo } from './todo.entity';
 
 @Injectable()
 export class TodoRepository {
-  constructor(private readonly db: DatabaseService) {}
+  constructor(private readonly db: PrismaService) {}
 
   async getAll(limit: number, offset: number): Promise<Todo[]> {
     return await this.db.todo.findMany({
