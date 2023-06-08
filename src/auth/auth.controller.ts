@@ -14,7 +14,7 @@ import { AuthGuard } from './auth.guard';
 
 import {
   ParamsDto,
-  BodyDto,
+  ClaimsDto,
   ProtectedResponseDto,
   TokenResponseDto,
   paramsSchema,
@@ -37,7 +37,7 @@ export class AuthController {
   @ApiOkResponse({
     type: TokenResponseDto,
   })
-  async token(@Body() body: BodyDto) {
+  async token(@Body() body: ClaimsDto) {
     const token = await this.service.sign(body);
     return { token };
   }

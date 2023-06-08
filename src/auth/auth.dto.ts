@@ -19,7 +19,7 @@ const params = z.object({
   email: z.string().email(),
 });
 
-export class BodyDto extends createZodDto(body) {}
+export class ClaimsDto extends createZodDto(body) {}
 export class TokenResponseDto extends createZodDto(tokenResponse) {}
 export class ProtectedResponseDto extends createZodDto(protectedResponse) {}
 export class ParamsDto extends createZodDto(params) {}

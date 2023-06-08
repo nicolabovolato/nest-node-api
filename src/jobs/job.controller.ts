@@ -3,7 +3,7 @@ import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
 import { ZodSerializerDto } from 'nestjs-zod';
 
-import { BodyDto, ResponseDto } from './job.dto';
+import { JobDto, ResponseDto } from './job.dto';
 import { JobService } from './job.service';
 
 @ApiTags('jobs')
@@ -19,7 +19,7 @@ export class JobController {
   @ApiOkResponse({
     type: ResponseDto,
   })
-  async create(@Body() job: BodyDto) {
+  async create(@Body() job: JobDto) {
     const id = await this.service.add(job);
     return { id };
   }

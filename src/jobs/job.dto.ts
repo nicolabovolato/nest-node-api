@@ -15,5 +15,5 @@ const response = z.object({
   id: z.string().uuid(),
 });
 
-export class BodyDto extends createZodDto(body) {}
+export class JobDto extends createZodDto(body) {}
 export class ResponseDto extends createZodDto(response) {}
