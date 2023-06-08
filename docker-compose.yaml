@@ -11,6 +11,16 @@ services:
   
   cache:
     image: redis:7-alpine
+
+  migrations: 
+    build: 
+      context: .
+      dockerfile: prisma.Dockerfile
+    command: sh -c './wait-for db:5432 -- npx prisma migrate deploy'
+    environment:
+      DATABASE_URL: postgres://user:pass@db:5432/postgres?sslmode=disable
+    depends_on:
+      - db
   
   api:
     build: .
@@ -27,11 +37,6 @@ services:
       CACHE_URL: redis://cache:6379/0
       QUEUE_URL: redis://cache:6379/1
       EXPOSE_OPENAPI: true
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
     ports:
       - 80:80
     depends_on:
