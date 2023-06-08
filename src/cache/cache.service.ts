@@ -25,7 +25,7 @@ export class CacheService extends Redis implements OnApplicationShutdown {
     this.on('error', (err) => this.logger.error(err));
   }
 
-  onApplicationShutdown() {
-    this.disconnect();
+  async onApplicationShutdown() {
+    await this.quit();
   }
 }

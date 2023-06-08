@@ -38,14 +38,7 @@ describe('JobsController (e2e)', () => {
   });
 
   beforeEach(async () => {
-    await Promise.all([
-      queue.clean(0, 'active'),
-      queue.clean(0, 'completed'),
-      queue.clean(0, 'delayed'),
-      queue.clean(0, 'failed'),
-      queue.clean(0, 'paused'),
-      queue.clean(0, 'wait'),
-    ]);
+    await queue.client.flushdb();
   });
 
   afterAll(async () => {
