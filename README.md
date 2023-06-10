@@ -21,6 +21,7 @@ Showcasing NestJS in a modern Node.js project.
 
 ### Libraries
 
+- `NestJS`
 - `Fastify`
 - `Pino`
 - `Zod`
