@@ -56,13 +56,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/pnpm
-      - run: pnpm exec prisma generate
       - run: pnpm build
 
   docker-build:
     name: Build Dockerfile
     runs-on: ubuntu-latest
-    needs: [lint, test]
+    needs: [lint, test, test-integration]
 
     steps:
       - uses: actions/checkout@v3
